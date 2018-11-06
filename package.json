@@ -1,0 +1,16 @@
+{
+  "name": "emoji-klasa",
+  "version": "1.0.0",
+  "description": "A bot to add emojis using Klasa as the base framework",
+  "main": "app.js",
+  "dependencies": {
+    "discord.js": "github:discordjs/discord.js",
+    "klasa": "^0.4.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Snitt",
+  "license": "ISC"
+}

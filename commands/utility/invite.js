@@ -5,7 +5,8 @@ module.exports = class extends Command {
   constructor(...args) {
     super(...args, {
       description: "Gives the bot invite",
-      aliases: ["inv", "link", "url"]
+      aliases: ["inv", "link", "url"],
+      enabled: true
     });
   }
 

@@ -26,12 +26,8 @@ module.exports = class extends Command {
         "You do not have the Manage Emojis permission in this server."
       );
 
-    const ext = getFileExt(url);
-    const file = getFileOut(message, ext);
+    const file = getFileOut(message);
     await saveFile(url, file);
-
-    // Returns true if <= 128x128
-    // const uploadable = checkSize(file);
 
     // Example output: { width: 240, height: 240, type: 'gif' }
     const imgDimensions = sizeOf(file);
@@ -83,21 +79,11 @@ function getFilesizeInBytes(filename) {
   return Promise.resolve(fileSizeInBytes);
 }
 
-// Gets file extension from URL
-function getFileExt(url) {
-  return url.match(/\.(\w+)(?:\?.+)?$/)[1];
-}
-
 async function saveEmoji(message, file, name) {
   return message.guild.emojis
     .create(file, name)
     .then(emoji => {
       message.channel.send(`Successfully uploaded **${name}** ${emoji}.`);
-      //Really dumb way to check if it's a URL. Local images are numbers .
-      //extension only.
-      // if (typeof file == "string" && file[0].toLowerCase() != "h") {
-      //   deleteImage(file);
-      // }
       return Promise.resolve();
     })
     .catch(e => {
@@ -107,9 +93,9 @@ async function saveEmoji(message, file, name) {
 }
 
 //Takes a message and returns the output location for saved files
-function getFileOut(message, ext) {
+function getFileOut(message) {
   //Need to check for file extensions
-  return `./images/${message.id}.${ext}`;
+  return `./images${message.id}`;
 }
 
 // Takes a URL and a directory+filename and saves to that directory with that

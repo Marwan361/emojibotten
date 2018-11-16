@@ -6,8 +6,6 @@ const fs = require("fs");
 const util = require("util");
 const execFile = util.promisify(require("child_process").execFile);
 const sizeOf = require("image-size");
-// const imagemin = require("imagemin");
-// const imageminGifsicle = require("imagemin-gifsicle");
 const gifsicle = require("gifsicle");
 
 module.exports = class extends Command {

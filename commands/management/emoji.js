@@ -37,11 +37,12 @@ module.exports = class extends Command {
     const imgDimensions = sizeOf(file);
 
     if (imgDimensions.width <= 128 && imgDimensions.height <= 128) {
-      saveEmoji(message, url, name);
+      await saveEmoji(message, url, name);
     } else {
       const img = await resizeImage(file, imgDimensions.type, "128", message);
-      saveEmoji(message, img, name);
+      await saveEmoji(message, img, name);
     }
+    deleteImage(file);
   }
 };
 
@@ -87,19 +88,21 @@ function getFileExt(url) {
   return url.match(/\.(\w+)(?:\?.+)?$/)[1];
 }
 
-function saveEmoji(message, file, name) {
-  message.guild.emojis
+async function saveEmoji(message, file, name) {
+  return message.guild.emojis
     .create(file, name)
     .then(emoji => {
       message.channel.send(`Successfully uploaded **${name}** ${emoji}.`);
       //Really dumb way to check if it's a URL. Local images are numbers .
       //extension only.
-      if (typeof file == "string" && file[0].toLowerCase() != "h") {
-        deleteImage(file);
-      }
+      // if (typeof file == "string" && file[0].toLowerCase() != "h") {
+      //   deleteImage(file);
+      // }
+      return Promise.resolve();
     })
     .catch(e => {
       message.channel.send(`Unable to create emoji for reason: ${e}`);
+      return Promise.resolve();
     });
 }
 

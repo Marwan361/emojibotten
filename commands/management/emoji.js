@@ -14,7 +14,7 @@ module.exports = class extends Command {
       description: "Add an emoji via a URL",
       usage: "<url:url> <name:str{1,20}>",
       usageDelim: " ",
-      aliases: ["addEmoji", "add"]
+      aliases: ["addEmoji", "add", "save", "saveEmoji"]
     });
   }
 

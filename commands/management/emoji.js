@@ -39,16 +39,27 @@ module.exports = class extends Command {
     if (imgDimensions.width <= 128 && imgDimensions.height <= 128) {
       saveEmoji(message, url, name);
     } else {
-      const img = await resizeImage(file, imgDimensions.type, "128");
+      const img = await resizeImage(file, imgDimensions.type, "128", message);
       saveEmoji(message, img, name);
     }
   }
 };
 
+async function deleteImage(file) {
+  fs.unlink(file, err => {
+    if (err) throw err;
+    return Promise.resolve();
+  });
+}
+
 //It will first try 128x128 then recursively call itself to 64 then 32 if size
 //is not below 256kb.
-async function resizeImage(file, type, imgSize) {
+async function resizeImage(file, type, imgSize, msg) {
   if (type == "gif") {
+    // msg is only present on the first call and not recursively.
+    if (msg) {
+      msg.channel.send("Processing...");
+    }
     await execFile(gifsicle, ["--resize-fit-width", imgSize, "-o", file, file]);
     const fileSize = await getFilesizeInBytes(file);
     if (fileSize > 256000) {
@@ -73,14 +84,19 @@ function getFilesizeInBytes(filename) {
 
 // Gets file extension from URL
 function getFileExt(url) {
-  return url.match(/\.(\w+)$/)[1];
+  return url.match(/\.(\w+)(?:\?.+)?$/)[1];
 }
 
-function saveEmoji(message, url, name) {
+function saveEmoji(message, file, name) {
   message.guild.emojis
-    .create(url, name)
+    .create(file, name)
     .then(emoji => {
       message.channel.send(`Successfully uploaded **${name}** ${emoji}.`);
+      //Really dumb way to check if it's a URL. Local images are numbers .
+      //extension only.
+      if (typeof file == "string" && file[0].toLowerCase() != "h") {
+        deleteImage(file);
+      }
     })
     .catch(e => {
       message.channel.send(`Unable to create emoji for reason: ${e}`);
@@ -93,13 +109,6 @@ function getFileOut(message, ext) {
   return `./images/${message.id}.${ext}`;
 }
 
-// Returns true if 128x128 or under
-// function checkSize(file) {
-//   const size = sizeOf(file);
-//   if (size.width <= 128 || size.length <= 128) return true;
-//   return false;
-// }
-
 // Takes a URL and a directory+filename and saves to that directory with that
 // file name.
 async function saveFile(url, saveAs) {
@@ -110,6 +119,3 @@ async function saveFile(url, saveAs) {
     return Promise.resolve();
   }
 }
-
-// Returns false if either width or height is less than 128 pixels
-function correctFileSize() {}

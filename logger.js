@@ -1,7 +1,7 @@
 const bunyan = require("bunyan");
 
 module.exports = bunyan.createLogger({
-  name: "emojibotten",
+  name: "discordMessage",
   streams: [
     {
       level: "info",

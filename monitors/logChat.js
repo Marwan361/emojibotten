@@ -1,4 +1,5 @@
 const { Monitor } = require("klasa");
+const log = require("../logger");
 
 module.exports = class extends Monitor {
   constructor(...args) {
@@ -16,12 +17,12 @@ module.exports = class extends Monitor {
   }
 
   async run(message) {
-    console.log(`
-    Guild ID: ${message.guild.id}\n
-    Guild: ${message.guild.name}\n
-    Channel: ${message.channel.name}\n
-    Author: ${message.author.username}#${message.author.discriminator}\n
-    Content: ${message.content}
-    `);
+    log.info(
+      {
+        id: message.id,
+        message: message
+      },
+      "Message Received"
+    );
   }
 };

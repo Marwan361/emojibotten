@@ -6,10 +6,10 @@ module.exports = class extends Monitor {
     super(...args, {
       name: "logChat",
       enabled: true,
-      ignoreBots: true,
-      ignoreSelf: true,
+      ignoreBots: false,
+      ignoreSelf: false,
       ignoreOthers: false,
-      ignoreWebhooks: true,
+      ignoreWebhooks: false,
       ignoreEdits: true,
       ignoreBlacklistedUsers: true,
       ignoreBlacklistedGuilds: true

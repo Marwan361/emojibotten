@@ -1,8 +1,6 @@
 const config = require("../../config");
 const { Command } = require("klasa");
 
-//const log = require("../../logger");
-
 const sharp = require("sharp");
 const fs = require("fs");
 const util = require("util");

@@ -3,4 +3,5 @@ package-lock.json
 config.js
 monitors
 logger.js
+message-logs.log
 bwd

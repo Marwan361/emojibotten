@@ -2,12 +2,14 @@
 
 Simple bot for simple purpose. Written in [Klasa](http://klasa.js.org) on top of [discord.js](https://discord.js.org).
 
-Two simple commands:
+Three simple commands:
 
 - inv/invite/link
 - emoji/addEmoji/add
+- remove/removeEmoji/emojiRemove/delete/deleteEmoji/emojiDelete
 
 Emoji command usage: `>emoji [url] [emoji name]`
+Delete command usage `>emoji [name OR use actual emoji]`
 
 #### Resizing
 

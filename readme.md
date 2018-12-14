@@ -9,6 +9,7 @@ Three simple commands:
 - remove/removeEmoji/emojiRemove/delete/deleteEmoji/emojiDelete
 
 Emoji command usage: `>emoji [url] [emoji name]`
+
 Delete command usage `>emoji [name OR use actual emoji]`
 
 #### Resizing

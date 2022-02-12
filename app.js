@@ -8,4 +8,4 @@ new Client({
     `Successfully initialized. Logged in as ${client.user.username} for ${
       client.guilds.size
     } guilds and ${client.users.size} users.`
-}).login(config.token);
+}).login(process.env.TOKEN);
